@@ -6,4 +6,6 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql \
 RUN curl -sS https://getcomposer.org/installer | php -- \
     &&  mv composer.phar /usr/local/bin/composer
 
+ADD /.docker/000-default.conf /etc/apache2/sites-available/
+
 
