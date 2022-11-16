@@ -2,11 +2,25 @@
 
 namespace App\Model\Manager;
 
-use App\Model\Entity\Post;
+use App\Model\Entity\CommentReaction;
 
 class CommentReactionManager extends Manager
 {
-    public function insert(CommentReactionManager $CommentReaction)
+
+    public function getByPostId($commentsPostId)
+    {
+        $query = 'SELECT * FROM `comments_reaction` WHERE `comments_post_id` = :commentsPostId';
+        $query = $this->pdo->prepare($query);
+        $query->bindValue(':commentsPostId', $commentsPostId);
+        $query->execute();
+        $commentsReaction = [];
+        while ($result = $query->fetch(\PDO::FETCH_ASSOC)) {
+            $commentsReaction[] = new CommentsReaction($result);
+        }
+        return $commentsReaction;
+    }
+
+    public function insert(CommentReaction $CommentReaction)
     {
         $newCommentReaction = 
             'INSERT INTO `CommentReactionManager` (`content`, `user_id`, `comments_post_id`)
@@ -19,7 +33,7 @@ class CommentReactionManager extends Manager
         $query->execute();
     }
 
-    public function update(CommentReactionManager $CommentReaction): bool
+    public function update(CommentReaction $CommentReaction): bool
     {
         $update = 
             'UPDATE `CommentReactionManager`

@@ -2,11 +2,25 @@
 
 namespace App\Model\Manager;
 
-use App\Model\Entity\Post;
+use App\Model\Entity\CommentPost;
 
 class CommentsPostManager extends Manager
 {
-    public function insert(CommentsPostManager $commentsPost)
+
+    public function getByPostId($postId)
+    {
+        $query = 'SELECT * FROM `comments_post` WHERE `post_id` = :postId';
+        $query = $this->pdo->prepare($query);
+        $query->bindValue(':postId', $postId);
+        $query->execute();
+        $commentsPost = [];
+        while ($result = $query->fetch(\PDO::FETCH_ASSOC)) {
+            $commentsPost[] = new CommentsPost($result);
+        }
+        return $commentsPost;
+    }
+
+    public function insert(CommentsPost $commentsPost)
     {
         $newCommentsPost = 
             'INSERT INTO `comments_post` (`content`, `user_id`, `post_id`)
@@ -19,7 +33,7 @@ class CommentsPostManager extends Manager
         $query->execute();
     }
 
-    public function update(CommentsPostManager $commentsPost): bool
+    public function update(CommentsPost $commentsPost): bool
     {
         $update = 
             'UPDATE `comments_post`

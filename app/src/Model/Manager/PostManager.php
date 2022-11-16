@@ -8,14 +8,10 @@ class PostManager extends Manager
 {
     public function getAllPost(): array
     {
-        $selectArticles =
-            'SELECT * FROM `articles` AS a ORDER BY `created_at` DESC
-            LEFT JOIN `comments_post` AS cp ON a.post_id = cp.post_id
-            LEFT JOIN `comments_reaction` AS cr ON cp.comments_post_id = cr.comments_post_id
-            ';
+        $selectArticles = 'SELECT * FROM `articles` AS a ORDER BY `created_at` DESC';
         $query = $this->pdo->query($selectArticles);
         $articles = [];
-        while ($result = $query->fetchAll(\PDO::FETCH_ASSOC)) {
+        while ($result = $query->fetch(\PDO::FETCH_ASSOC)) {
             $articles[] = new Post($result);
         }
         return $articles;

@@ -8,7 +8,9 @@ class Post extends BaseEntity
 {
     private string $title;
     private string $content;
+    private string $author;
     private datetime $createdAt;
+    private int $commentsCount;
     private int $userId;
 
     public function getTitle()
@@ -33,6 +35,17 @@ class Post extends BaseEntity
         return $this;
     }
 
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+        return $this;
+    }
+
     public function getCreatedAt()
     {
         return $this->creadtedAt->format('Y-m-d H:i:s');
@@ -41,6 +54,17 @@ class Post extends BaseEntity
     public function setcreatedAt($date)
     {
         $this->createdAt = new \DateTime($date);
+        return $this;
+    }
+
+    public function getCommentsCount()
+    {
+        return $this->commentsCount;
+    }
+
+    public function setCommentsCount($commentsCount)
+    {
+        $this->commentsCount = $commentsCount;
         return $this;
     }
 

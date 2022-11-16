@@ -11,7 +11,9 @@ CREATE TABLE IF NOT EXISTS posts
     id      INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title   TEXT NOT NULL,
     content TEXT NOT NULL,
+    author VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    comments_count INT DEFAULT 0,
     user_id INT NOT NULL
 );
 
@@ -19,7 +21,9 @@ CREATE TABLE IF NOT EXISTS comments_post
 (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     content TEXT NOT NULL,
+    author VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    reactions_count INT DEFAULT 0,
     user_id INT NOT NULL,
     post_id INT NOT NULL
 );
@@ -28,6 +32,7 @@ CREATE TABLE IF NOT EXISTS comments_reaction
 (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     content TEXT NOT NULL,
+    author VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     user_id INT NOT NULL,
     comments_post_id INT NOT NULL

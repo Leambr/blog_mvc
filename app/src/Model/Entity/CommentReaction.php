@@ -7,6 +7,7 @@ use App\Model\Entity\BaseEntity;
 class CommentReaction extends BaseEntity
 {
     private string $content;
+    private string $author;
     private datetime $createdAt;
     private int $userId;
     private int $commentId;
@@ -19,6 +20,17 @@ class CommentReaction extends BaseEntity
     public function setContent($content)
     {
         $this->content = $content;
+        return $this;
+    }
+
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function setAuthor($author)
+    {
+        $this->author = $author;
         return $this;
     }
 
