@@ -12,7 +12,7 @@ abstract class Controller
         call_user_func_array([$this, $action], $params);
     }
 
-    public function render(string $view, string $title = "Document", string $style = "", array $args = [])
+    public function render(string $view, string $title, string $style, array $args = [])
     {
         $view = dirname(__DIR__, 2) . '/views/' . $view;
         $base = dirname(__DIR__, 2) . '/views/base.php';
@@ -25,9 +25,9 @@ abstract class Controller
         unset($args);
 
         require_once $view;
-        $_pageContent = ob_get_clean();
+        $content = ob_get_clean();
         $title = $title;
-        $style = $style;
+        $style = 'style/' . $style . '?time();';
 
 
         require_once $base;
