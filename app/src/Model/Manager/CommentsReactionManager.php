@@ -2,9 +2,9 @@
 
 namespace App\Model\Manager;
 
-use App\Model\Entity\CommentReaction;
+use App\Model\Entity\CommentsReaction;
 
-class CommentReactionManager extends Manager
+class CommentsReactionManager extends Manager
 {
 
     public function getByPostId($commentsPostId)
@@ -20,36 +20,36 @@ class CommentReactionManager extends Manager
         return $commentsReaction;
     }
 
-    public function insert(CommentReaction $CommentReaction)
+    public function insert(CommentsReaction $CommentsReaction)
     {
-        $newCommentReaction = 
-            'INSERT INTO `CommentReactionManager` (`content`, `user_id`, `comments_post_id`)
+        $newCommentsReaction = 
+            'INSERT INTO `comments_reaction` (`content`, `user_id`, `comments_post_id`)
             VALUES(:content, :userId, :commentsPostId)';
         
-        $query = $this->pdo->prepare($newCommentReaction);
-        $query->bindValue(':content', $CommentReaction->getContent());
-        $query->bindValue(':userId', $CommentReaction->getUserId());
-        $query->bindValue(':commentsPostId', $CommentReaction->getCommentsPostId());
+        $query = $this->pdo->prepare($newCommentsReaction);
+        $query->bindValue(':content', $CommentsReaction->getContent());
+        $query->bindValue(':userId', $CommentsReaction->getUserId());
+        $query->bindValue(':commentsPostId', $CommentsReaction->getCommentsPostId());
         $query->execute();
     }
 
-    public function update(CommentReaction $CommentReaction): bool
+    public function update(CommentsReaction $CommentsReaction): bool
     {
         $update = 
-            'UPDATE `CommentReactionManager`
+            'UPDATE `comments_reaction`
             SET `content`= :content
             WHERE `id` = :id';
 
         $query = $pdo->prepare($update);
-        $query->bindValue(':content', $CommentReaction->getContent());
-        $query->bindValue(':id', $CommentReaction->getId());
+        $query->bindValue(':content', $CommentsReaction->getContent());
+        $query->bindValue(':id', $CommentsReaction->getId());
 
         return $query->execute();
     }
 
     public function delete($id)
     {
-        $delete = "DELETE FROM `CommentReactionManager` WHERE `id` = :id";
+        $delete = "DELETE FROM `comments_reaction` WHERE `id` = :id";
         $query = $this->pdo->prepare($delete);
         $query->bindValue(':id', $id);
 

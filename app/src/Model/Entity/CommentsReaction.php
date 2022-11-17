@@ -4,14 +4,13 @@ namespace App\Model\Entity;
 
 use App\Model\Entity\BaseEntity;
 
-class CommentPost extends BaseEntity
+class CommentsReaction extends BaseEntity
 {
     private string $content;
     private string $author;
     private datetime $createdAt;
-    private int $reactionsCount;
     private int $userId;
-    private int $commentPostId;
+    private int $commentsPostId;
 
     public function getContent()
     {
@@ -46,17 +45,6 @@ class CommentPost extends BaseEntity
         return $this;
     }
 
-    public function getReactionsCount()
-    {
-        return $this->reactionsCount;
-    }
-
-    public function setReactionsCount($reactionsCount)
-    {
-        $this->reactionsCount = $reactionsCount;
-        return $this;
-    }
-
     public function getUserId()
     {
         return $this->userId;
@@ -68,14 +56,14 @@ class CommentPost extends BaseEntity
         return $this;
     }
 
-    public function getCommentPostId()
+    public function getCommentsPostId()
     {
-        return $this->commentPostId;
+        return $this->commentsPostId;
     }
 
-    public function setCommentPostId($commentPostId)
+    public function setCommentsPostId($commentsPostId)
     {
-        $this->commentPostId = $commentPostId;
+        $this->commentsPostId = $commentsPostId;
         return $this;
     }
 }
