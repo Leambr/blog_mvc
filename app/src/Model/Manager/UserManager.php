@@ -41,10 +41,10 @@ class UserManager extends Manager
 
     public function getUserByName($userName): ?User
     {
-        $query = 
-        'SELECT *
+        $query =
+            'SELECT *
         FROM `users`
-        WHERE `user_name` = :userName';
+        WHERE `username` = :userName';
 
         $db = $this->pdo->prepare($query);
         $db->bindValue(':userName', $userName);
@@ -62,9 +62,9 @@ class UserManager extends Manager
 
         $user->setPassword($user->getPassword(), true);
         $newUser =
-            "INSERT INTO `users` (`user_name`, `password`)
+            "INSERT INTO `users` (`username`, `password`)
             VALUES(:userName, :password)";
-        
+
         $query = $this->pdo->prepare($newUser);
         $query->bindValue(':userName', $user->getUserName());
         $query->bindValue(':password', $user->getPassword());
@@ -77,9 +77,9 @@ class UserManager extends Manager
     {
 
         $user->setPassword($user->getPassword(), true);
-        $updateUser = 
+        $updateUser =
             'UPDATE `users`
-            SET `user_name` = :userName, , `password` = :password
+            SET `username` = :userName, , `password` = :password
             WHERE `id` = :id';
 
         $query = $this->pdo->prepare($updateUser);
