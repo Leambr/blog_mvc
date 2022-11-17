@@ -10,6 +10,6 @@
         <button type="submit" name="valider">Valider</button>
     </form>
     <button type="button">
-        <a href="/signup">S'inscrire</a>
+        <a href="/signUp">S'inscrire</a>
     </button>
 </div>

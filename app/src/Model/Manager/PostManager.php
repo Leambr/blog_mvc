@@ -20,35 +20,36 @@ class PostManager extends Manager
     public function insert(Post $post)
     {
         $newArticle =
-            'INSERT INTO `posts` (`title`, `content`, `user_id`)
-            VALUES(:title, :content, :userId)';
+            'INSERT INTO `posts` (`title`, `content`, `author`, `user_id`)
+            VALUES(:title, :content, :author, :userId)';
 
         $query = $this->pdo->prepare($newArticle);
         $query->bindValue(':title', $post->getTitle());
         $query->bindValue(':content', $post->getContent());
+        $query->bindValue(':author', $post->getAuthor());
         $query->bindValue(':userId', $post->getUserId());
         $query->execute();
     }
 
     public function update(Post $post): bool
     {
-        $updateArticle =
+        $updatePost =
             'UPDATE `posts`
             SET `title` = :title, `content`= :content
-            WHERE `id` = :article_id';
+            WHERE `id` = :post_id';
 
-        $query = $this->pdo->prepare($updateArticle);
+        $query = $this->pdo->prepare($updatePost);
         $query->bindValue(':title', $post->getTitle());
         $query->bindValue(':content', $post->getContent());
-        $query->bindValue(':article_id', $post->getId());
+        $query->bindValue(':post_id', $post->getId());
 
         return $query->execute();
     }
 
     public function delete($id)
     {
-        $deleteArticle = "DELETE FROM `posts` WHERE `id` = :id";
-        $query = $this->pdo->prepare($deleteArticle);
+        $deletePost = "DELETE FROM `posts` WHERE `id` = :id";
+        $query = $this->pdo->prepare($deletePost);
         $query->bindValue(':id', $id);
 
         return $query->execute();

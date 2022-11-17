@@ -16,7 +16,7 @@ abstract class Controller
     {
         $view = dirname(__DIR__, 2) . '/views/' . $view;
         $base = dirname(__DIR__, 2) . '/views/base.php';
-
+        
         ob_start();
         foreach ($args as $key => $value) {
             ${$key} = $value;

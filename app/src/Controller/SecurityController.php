@@ -9,14 +9,14 @@ use App\Route\Route;
 
 class SecurityController extends Controller
 {
-    #[Route('/login', name: "login", methods: ["GET", "POST"])]
+    #[Route('/login', name: 'login', methods: ['GET', 'POST'])]
     public function login()
     {
-        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $this->render('login.php', 'login', 'login.css');
         }
 
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $username = $_POST['username'];
                 $password = $_POST['password'];
@@ -25,25 +25,25 @@ class SecurityController extends Controller
                 $user = $userManager->getUserByName($username);
 
                 if ($user && $user->verifyPassword($password)) {
-                    $_SESSION['user'] = $user;
+                    $_SESSION['user'] = serialize($user);
                     http_response_code(302);
-                    header("Location: /");
+                    header('Location: /');
                     exit();
                 }
 
-                $this->render('login.php', 'Login', 'login.css', ['errorMessage' => "Nom d'utilisateur ou mot de passe incorect"]);
+                $this->render('login.php', 'Login', 'login.css', ['errorMessage' => 'Nom d\'utilisateur ou mot de passe incorect']);
             }
         }
     }
 
-    #[ROUTE('/signUp', name: "signup", methods: ["GET", "POST"])]
+    #[ROUTE('/signUp', 'signup', ['GET', 'POST'])]
     public function signUp()
     {
-        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $this->render('signUp.php', 'Sign Up', 'signUp.css');
         }
 
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $username = $_POST['username'];
 
@@ -52,13 +52,24 @@ class SecurityController extends Controller
                 if (!isset($user)) {
                     $user = new User($_POST);
                     $user = $userManager->insert($user);
-                    $_SESSION['user'] = $user;
+                    $_SESSION['user'] = serialize($user);
                     http_response_code(302);
-                    header("Location: /");
+                    header('Location: /');
                     exit();
                 }
                 $this->render('signUp.php', 'Sign Up', 'signUp.css', ['errorMessage' => 'Cet utilisateur existe déjà']);
             }
         }
+    }
+
+    #[Route('/signOut', 'signout', ['POST'])]
+    public function signout()
+    {
+        if($_SERVER["REQUEST_METHOD"] === "POST") {
+            unset($_SESSION["user"]);
+            http_response_code(302);
+        }
+        header('Location: /login');
+        exit();
     }
 }
