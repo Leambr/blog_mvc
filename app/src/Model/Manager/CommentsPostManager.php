@@ -2,7 +2,7 @@
 
 namespace App\Model\Manager;
 
-use App\Model\Entity\CommentPost;
+use App\Model\Entity\CommentsPost;
 
 class CommentsPostManager extends Manager
 {
@@ -22,10 +22,10 @@ class CommentsPostManager extends Manager
 
     public function insert(CommentsPost $commentsPost)
     {
-        $newCommentsPost = 
+        $newCommentsPost =
             'INSERT INTO `comments_post` (`content`, `user_id`, `post_id`)
             VALUES(:content, :userId, :postId)';
-        
+
         $query = $this->pdo->prepare($newCommentsPost);
         $query->bindValue(':content', $commentsPost->getContent());
         $query->bindValue(':userId', $commentsPost->getUserId());
@@ -35,12 +35,12 @@ class CommentsPostManager extends Manager
 
     public function update(CommentsPost $commentsPost): bool
     {
-        $update = 
+        $update =
             'UPDATE `comments_post`
             SET `content`= :content
             WHERE `id` = :id';
 
-        $query = $pdo->prepare($update);
+        $query = $this->pdo->prepare($update);
         $query->bindValue(':content', $commentsPost->getContent());
         $query->bindValue(':id', $commentsPost->getId());
 
@@ -54,5 +54,5 @@ class CommentsPostManager extends Manager
         $query->bindValue(':id', $id);
 
         return $query->execute();
-    }    
+    }
 }

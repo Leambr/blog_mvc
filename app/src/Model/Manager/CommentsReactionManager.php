@@ -22,10 +22,10 @@ class CommentsReactionManager extends Manager
 
     public function insert(CommentsReaction $CommentsReaction)
     {
-        $newCommentsReaction = 
+        $newCommentsReaction =
             'INSERT INTO `comments_reaction` (`content`, `user_id`, `comments_post_id`)
             VALUES(:content, :userId, :commentsPostId)';
-        
+
         $query = $this->pdo->prepare($newCommentsReaction);
         $query->bindValue(':content', $CommentsReaction->getContent());
         $query->bindValue(':userId', $CommentsReaction->getUserId());
@@ -35,12 +35,12 @@ class CommentsReactionManager extends Manager
 
     public function update(CommentsReaction $CommentsReaction): bool
     {
-        $update = 
+        $update =
             'UPDATE `comments_reaction`
             SET `content`= :content
             WHERE `id` = :id';
 
-        $query = $pdo->prepare($update);
+        $query = $this->pdo->prepare($update);
         $query->bindValue(':content', $CommentsReaction->getContent());
         $query->bindValue(':id', $CommentsReaction->getId());
 
@@ -54,5 +54,5 @@ class CommentsReactionManager extends Manager
         $query->bindValue(':id', $id);
 
         return $query->execute();
-    }    
+    }
 }

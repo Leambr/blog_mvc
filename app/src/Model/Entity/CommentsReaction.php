@@ -3,12 +3,13 @@
 namespace App\Model\Entity;
 
 use App\Model\Entity\BaseEntity;
+use DateTime;
 
 class CommentsReaction extends BaseEntity
 {
     private string $content;
     private string $author;
-    private datetime $createdAt;
+    private DateTime $createdAt;
     private int $userId;
     private int $commentsPostId;
 
@@ -36,7 +37,7 @@ class CommentsReaction extends BaseEntity
 
     public function getCreatedAt()
     {
-        return $this->creadtedAt->format('Y-m-d H:i:s');
+        return $this->createdAt->format('Y-m-d H:i:s');
     }
 
     public function setcreatedAt($date)

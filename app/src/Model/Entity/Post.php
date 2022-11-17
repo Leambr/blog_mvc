@@ -3,13 +3,14 @@
 namespace App\Model\Entity;
 
 use App\Model\Entity\BaseEntity;
+use DateTime;
 
 class Post extends BaseEntity
 {
     private string $title;
     private string $content;
     private string $author;
-    private datetime $createdAt;
+    private DateTime $createdAt;
     private int $commentsCount;
     private int $userId;
 
@@ -48,7 +49,7 @@ class Post extends BaseEntity
 
     public function getCreatedAt()
     {
-        return $this->creadtedAt->format('Y-m-d H:i:s');
+        return $this->createdAt->format('Y-m-d H:i:s');
     }
 
     public function setcreatedAt($date)
@@ -78,5 +79,4 @@ class Post extends BaseEntity
         $this->userId = $userId;
         return $this;
     }
-
 }
