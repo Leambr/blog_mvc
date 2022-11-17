@@ -8,7 +8,7 @@ class PostManager extends Manager
 {
     public function getAllPost(): array
     {
-        $selectArticles = 'SELECT * FROM `articles` AS a ORDER BY `created_at` DESC';
+        $selectArticles = 'SELECT * FROM `posts` AS a ORDER BY `created_at` DESC';
         $query = $this->pdo->query($selectArticles);
         $articles = [];
         while ($result = $query->fetch(\PDO::FETCH_ASSOC)) {
@@ -20,7 +20,7 @@ class PostManager extends Manager
     public function insert(Post $post)
     {
         $newArticle =
-            'INSERT INTO `articles` (`title`, `content`, `user_id`)
+            'INSERT INTO `posts` (`title`, `content`, `user_id`)
             VALUES(:title, :content, :userId)';
 
         $query = $this->pdo->prepare($newArticle);
@@ -33,7 +33,7 @@ class PostManager extends Manager
     public function update(Post $post): bool
     {
         $updateArticle =
-            'UPDATE `articles`
+            'UPDATE `posts`
             SET `title` = :title, `content`= :content
             WHERE `id` = :article_id';
 
@@ -47,7 +47,7 @@ class PostManager extends Manager
 
     public function delete($id)
     {
-        $deleteArticle = "DELETE FROM `articles` WHERE `id` = :id";
+        $deleteArticle = "DELETE FROM `posts` WHERE `id` = :id";
         $query = $this->pdo->prepare($deleteArticle);
         $query->bindValue(':id', $id);
 
