@@ -47,8 +47,11 @@
                     <input type="hidden" name="id" value="<?= $post->getId() ?>">
                     <button type="submit">Valider</button>
                 </form>
+                <section class="section">
+
+                </section>
             </div>
-    <?php endforeach;
+        <?php endforeach;
     else :
         echo 'Aucun articles';
     endif; ?>

@@ -24,26 +24,51 @@ seeComments.forEach((commentButton) => {
     let isVisible = false;
     commentButton.onclick = (e) => {
         const formToDisplay = e.target.nextElementSibling;
+        let section = formToDisplay.nextElementSibling;
         isVisible = !isVisible;
         formToDisplay.style.display = isVisible ? "block" : "none";
+        section.style.display = isVisible ? "block" : "none";
         e.target.innerHTML = isVisible ? "Annuler" : "Commentaires";
         let postId = formToDisplay.elements[1].value;
         const api = async () => {
+            section.innerHTML = "";
+            formToDisplay.elements[0].value = "";
             const res = await fetch(`/comment/${postId}`);
             const data = await res.json();
             console.table(data);
+
+            data.forEach(comment => {
+                let content = comment.content;
+                let author = comment.author;
+                let div = document.createElement("div");
+                let span = document.createElement("span");
+                let span2 = document.createElement("span");
+                let br = document.createElement("br");
+    
+                div.style.border = "solid 1px black";
+                div.style.marginTop = "20px";
+                div.style.padding = "10px";
+                div.style.width = "300px";
+    
+                span.innerHTML = author;
+                span2.innerHTML = content;
+                section.appendChild(div);
+                div.appendChild(span);
+                div.appendChild(br);
+                div.appendChild(span2);
+            })
+
+
         };
         api();
 
         formToDisplay.onsubmit = (e) => {
             e.preventDefault();
-            console.log(formToDisplay);
             fetch("/newComment", {
                 method: "POST",
                 body: new FormData(formToDisplay)
             }) .then(() => {
                 api();
-                formToDisplay.elements[0].value = "";
             })
         }
     };

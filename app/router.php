@@ -32,12 +32,12 @@ foreach ($controllers as $controller) {
 
 $url = "/" . trim(explode("?", $_SERVER['REQUEST_URI'])[0], "/");
 
-// if ($url != "/login" && $url != "/signUp") {
-//     if (!isset($_SESSION["user"])) {
-//         header("Location: /login");
-//         exit;
-//     }
-// }
+if ($url != "/login" && $url != "/signUp") {
+    if (!isset($_SESSION["user"])) {
+        header("Location: /login");
+        exit;
+    }
+}
 
 foreach ($routesObj as $route) {
     if (!$route->match($url) || !in_array($_SERVER['REQUEST_METHOD'], $route->getMethods())) {
