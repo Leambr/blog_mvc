@@ -4,10 +4,10 @@ namespace App\Model\Entity;
 
 use App\Model\Traits\Hydrator;
 
-abstract class BaseEntity
+abstract class BaseEntity implements \JsonSerializable
 {
 
-    protected int $id;
+    protected ?int $id = null;
 
     use Hydrator;
 
@@ -16,10 +16,6 @@ abstract class BaseEntity
         $this->hydrate($data);
     }
 
-
-
-
-    // getter and setter
     public function getId()
     {
         return $this->id;
@@ -28,5 +24,17 @@ abstract class BaseEntity
     public function setId(int $id)
     {
         return $this->id = $id;
+    }
+    
+    public function jsonSerialize(): mixed
+    {
+        $reflection = new \ReflectionClass($this);
+        $atts = [];
+
+        foreach ($reflection->getProperties() as $property) {
+            $atts[$property->getName()] = $property->getValue($this);
+        }
+
+        return $atts;
     }
 }

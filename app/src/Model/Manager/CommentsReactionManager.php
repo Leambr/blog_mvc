@@ -23,11 +23,12 @@ class CommentsReactionManager extends Manager
     public function insert(CommentsReaction $CommentsReaction)
     {
         $newCommentsReaction =
-            'INSERT INTO `comments_reaction` (`content`, `user_id`, `comments_post_id`)
-            VALUES(:content, :userId, :commentsPostId)';
+            'INSERT INTO `comments_reaction` (`content`, `author`, `user_id`, `comments_post_id`)
+            VALUES(:content, :author, :userId, :commentsPostId)';
 
         $query = $this->pdo->prepare($newCommentsReaction);
         $query->bindValue(':content', $CommentsReaction->getContent());
+        $query->bindValue(':author', $CommentsReaction->getAuthor());
         $query->bindValue(':userId', $CommentsReaction->getUserId());
         $query->bindValue(':commentsPostId', $CommentsReaction->getCommentsPostId());
         $query->execute();

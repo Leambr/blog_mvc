@@ -7,9 +7,9 @@ use App\Model\Entity\BaseEntity;
 class User extends BaseEntity
 {
 
-    private string $username;
-    private string $password;
-    private string $admin;
+    private ?string $username = null;
+    private ?string $password = null;
+    private ?string $admin = null;
 
     public function getUsername()
     {
@@ -49,5 +49,4 @@ class User extends BaseEntity
         $this->admin = $admin;
         return $this;
     }
-
 }

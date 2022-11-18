@@ -23,13 +23,14 @@ class CommentsPostManager extends Manager
     public function insert(CommentsPost $commentsPost)
     {
         $newCommentsPost =
-            'INSERT INTO `comments_post` (`content`, `user_id`, `post_id`)
-            VALUES(:content, :userId, :postId)';
+            'INSERT INTO `comments_post` (`content`, `author`, `user_id`, `post_id`)
+            VALUES(:content, :author, :userId, :postId)';
 
         $query = $this->pdo->prepare($newCommentsPost);
         $query->bindValue(':content', $commentsPost->getContent());
+        $query->bindValue(':author', $commentsPost->getAuthor());
         $query->bindValue(':userId', $commentsPost->getUserId());
-        $query->bindValue('PostId', $commentsPost->getPostId());
+        $query->bindValue(':postId', $commentsPost->getPostId());
         $query->execute();
     }
 

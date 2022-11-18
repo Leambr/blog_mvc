@@ -7,12 +7,12 @@ use DateTime;
 
 class Post extends BaseEntity
 {
-    private string $title;
-    private string $content;
-    private string $author;
-    private DateTime $createdAt;
-    private int $commentsCount;
-    private int $userId;
+    private ?string $title = null;
+    private ?string $content = null;
+    private ?string $author = null;
+    private ?DateTime $createdAt = null;
+    private ?int $commentsCount = null;
+    private ?int $userId = null;
 
     public function getTitle()
     {

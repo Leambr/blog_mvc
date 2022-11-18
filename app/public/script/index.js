@@ -28,12 +28,26 @@ seeComments.forEach((commentButton) => {
         formToDisplay.style.display = isVisible ? "block" : "none";
         e.target.innerHTML = isVisible ? "Annuler" : "Commentaires";
         let postId = formToDisplay.elements[1].value;
-        // fetch("/comment/postId").then((res) => console.log(res.json()));
         const api = async () => {
-            const res = await fetch("/comment/postId");
+            const res = await fetch(`/comment/${postId}`);
             const data = await res.json();
             console.table(data);
         };
         api();
+
+        formToDisplay.onsubmit = (e) => {
+            e.preventDefault();
+            console.log(formToDisplay);
+            fetch("/newComment", {
+                method: "POST",
+                body: new FormData(formToDisplay)
+            }) .then(() => {
+                api();
+                formToDisplay.elements[0].value = "";
+            })
+        }
     };
 });
+
+
+

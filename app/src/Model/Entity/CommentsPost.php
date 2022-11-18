@@ -7,12 +7,12 @@ use DateTime;
 
 class CommentsPost extends BaseEntity
 {
-    private string $content;
-    private string $author;
-    private DateTime $createdAt;
-    private int $reactionsCount;
-    private int $userId;
-    private int $postId;
+    private ?string $content = null;
+    private ?string $author = null;
+    private ?DateTime $createdAt = null;
+    private ?int $reactionsCount = null;
+    private ?int $userId = null;
+    private ?int $postId = null;
 
     public function getContent()
     {
