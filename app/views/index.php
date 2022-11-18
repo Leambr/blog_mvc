@@ -1,10 +1,10 @@
 <header>
     <h2>
         <?php if (isset($name)) {
-            echo $name;    
+            echo $name;
         } else {
             echo 'My Name is Nobody';
-        }?>
+        } ?>
     </h2>
     <form action="/signOut" method="POST">
         <button type="submit">Déconnexion</button>
@@ -20,30 +20,38 @@
 </header>
 <main>
     <h3> Actu </h3>
-    <?php if (isset($posts)):
-        foreach ($posts as $post): ?>
+    <?php if (isset($posts)) :
+        foreach ($posts as $post) : ?>
             <div class="article" style="margin-top:20px; border: solid 1px black; padding: 10px; width: 500px">
                 <span class="author"><?= $post->getAuthor() ?></span><br>
                 <span class="title"><?= $post->getTitle() ?></span><br>
                 <span class="content"><?= $post->getContent() ?></span><br>
-                <?php if ($post->getUserId() === $user->getId() || $user->getAdmin() == true): ?>
+                <?php if ($post->getUserId() === $user->getId() || $user->getAdmin() == true) : ?>
                     <form class="deleteArticle" action="/post/delete" method="POST" style="margin-top: 10px">
                         <input type="hidden" name="postId" value="<?= $post->getId() ?>">
                         <button type="submit">Supprimer</button>
                     </form>
+
                     <button class="modify" style="margin-top: 10px">Modifier</button>
                     <form class="modifyForm" action="/post/patch" method="POST">
-                        <input class="title" type="text" name="title" value="<?= $post->getTitle() ?>"/><br>
+                        <input class="title" type="text" name="title" value="<?= $post->getTitle() ?>" /><br>
                         <textarea name="content" value="<?= $post->getContent() ?>"><?= $post->getContent() ?></textarea>
                         <input type="hidden" name="id" value="<?= $post->getId() ?>">
                         <button type="submit">Valider</button>
                     </form>
                 <?php endif; ?>
+
+                <button class="seeComments">Commentaires</button>
+                <form class="commentForm" action="/newComment" method="POST">
+                    <textarea name="content"></textarea>
+                    <input type="hidden" name="id" value="<?= $post->getId() ?>">
+                    <button type="submit">Valider</button>
+                </form>
             </div>
-        <?php endforeach;
-    else:
+    <?php endforeach;
+    else :
         echo 'Aucun articles';
-    endif;?>
+    endif; ?>
 </main>
 <footer>
     <script src="script/index.js?<?php echo time(); ?>"></script>
