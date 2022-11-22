@@ -35,16 +35,19 @@ seeComments.forEach((commentButton) => {
             formToDisplay.elements[0].value = "";
             const res = await fetch(`/comment/${postId}`);
             const data = await res.json();
-            console.table(data);
 
             data.forEach(comment => {
                 let content = comment.content;
                 let author = comment.author;
+                let date = comment.createdAt.date;
+                date = date.split('.')[0];
                 let div = document.createElement("div");
                 let span = document.createElement("span");
                 let span2 = document.createElement("span");
+                let span3 = document.createElement("span");
                 let br = document.createElement("br");
-    
+                let br2 = document.createElement("br");
+
                 div.style.border = "solid 1px black";
                 div.style.marginTop = "20px";
                 div.style.padding = "10px";
@@ -52,10 +55,13 @@ seeComments.forEach((commentButton) => {
     
                 span.innerHTML = author;
                 span2.innerHTML = content;
+                span3.innerHTML = date;
                 section.appendChild(div);
                 div.appendChild(span);
                 div.appendChild(br);
                 div.appendChild(span2);
+                div.appendChild(br2);
+                div.appendChild(span3);
             })
 
 

@@ -36,7 +36,9 @@
                 <span class="content"><?= $post->getContent() ?></span><br>
                 <?php if ($post->getFile() !== null):?>
                     <img class="file" src="img/<?= $post->getFile()?>" alt="" style="max-width: 300px; max-height: 200px; padding: 10px;">
+                    <br>
                 <?php endif ?>
+                <span class="date"><?= $post->getCreatedAt() ?></span>
                 <?php if ($post->getUserId() === $user->getId() || $user->getAdmin() == true) : ?>
                     <form class="deleteArticle" action="/post/delete" method="POST" style="margin-top: 10px">
                         <input type="hidden" name="postId" value="<?= $post->getId() ?>">
