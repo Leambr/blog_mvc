@@ -20,12 +20,13 @@ class PostManager extends Manager
     public function insert(Post $post)
     {
         $newArticle =
-            'INSERT INTO `posts` (`title`, `content`, `author`, `user_id`)
-            VALUES(:title, :content, :author, :userId)';
+            'INSERT INTO `posts` (`title`, `content`, `file`, `author`, `user_id`)
+            VALUES(:title, :content, :file, :author, :userId)';
 
         $query = $this->pdo->prepare($newArticle);
         $query->bindValue(':title', $post->getTitle());
         $query->bindValue(':content', $post->getContent());
+        $query->bindValue(':file', $post->getFile());
         $query->bindValue(':author', $post->getAuthor());
         $query->bindValue(':userId', $post->getUserId());
         $query->execute();

@@ -9,6 +9,7 @@ class Post extends BaseEntity
 {
     private ?string $title = null;
     private ?string $content = null;
+    private ?string $file = null;
     private ?string $author = null;
     private ?DateTime $createdAt = null;
     private ?int $commentsCount = null;
@@ -33,6 +34,17 @@ class Post extends BaseEntity
     public function setContent($content)
     {
         $this->content = $content;
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->file = $file;
         return $this;
     }
 

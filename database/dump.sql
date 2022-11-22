@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS posts
     id      INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title   TEXT NOT NULL,
     content TEXT NOT NULL,
+    file VARCHAR(255),
     author VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     comments_count INT DEFAULT 0,

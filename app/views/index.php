@@ -10,11 +10,19 @@
         <button type="submit">Déconnexion</button>
     </form>
     <h3>Nouveau Post</h3>
-    <form class="newPostForm" method="POST" action="/post" style="margin-top:20px; border: solid 1px black; padding: 10px; width: 300px">
+    <?php if (isset($errorMessage)) :
+        foreach ($errorMessage as $error): ?>
+            <span><?= $error ?></span><br>
+        <?php endforeach;
+    endif ?>
+    <form class="newPostForm" method="POST" action="/post" enctype="multipart/form-data" style="margin-top:20px; border: solid 1px black; padding: 10px; width: 300px">
         <label for="title">Titre</label><br>
         <input id="title" type="text" name="title"><br>
         <label for="contentInput">Article</label><br>
         <textarea id="contentInput" name="content" type="text"></textarea><br>
+        <div id="depose">Déposez vos images ou cliquez pour choisir</div>
+        <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg, image/png, image/gif, image/jpg">
+        <div class="bloc" id="preview"></div>
         <button class="submit" type="submit">Envoyer</button>
     </form>
 </header>
@@ -26,6 +34,9 @@
                 <span class="author"><?= $post->getAuthor() ?></span><br>
                 <span class="title"><?= $post->getTitle() ?></span><br>
                 <span class="content"><?= $post->getContent() ?></span><br>
+                <?php if ($post->getFile() !== null):?>
+                    <img class="file" src="img/<?= $post->getFile()?>" alt="" style="max-width: 300px; max-height: 200px; padding: 10px;">
+                <?php endif ?>
                 <?php if ($post->getUserId() === $user->getId() || $user->getAdmin() == true) : ?>
                     <form class="deleteArticle" action="/post/delete" method="POST" style="margin-top: 10px">
                         <input type="hidden" name="postId" value="<?= $post->getId() ?>">
