@@ -10,14 +10,14 @@ use App\Model\Entity\Post;
 class PostController extends Controller
 {
     #[Route('/', 'homePage', ['GET'])]
-    public function home()
+    public function home($error = [])
     {
         $postManager = new PostManager(new PDOFactory());
         $posts = $postManager->getAllPost();
         $user = unserialize($_SESSION['user']);
         $name = $user->getUsername();
 
-        $this->render('index.php', 'Timeline', 'index.css', ['posts' => $posts, 'user' => $user, 'name' => $name]);
+        $this->render('index.php', 'Timeline', 'index.css', ['posts' => $posts, 'user' => $user, 'name' => $name, 'errorMessage' => $error]);
         exit();
     }
 
@@ -34,7 +34,7 @@ class PostController extends Controller
                 $fileName = $this->uuid() . '.' . strtolower(pathinfo($_FILES["fileToUpload"]['name'],PATHINFO_EXTENSION));
                 $isSaved = $this->saveFile($fileName);
                 if ($isSaved[0] === 'error'){
-                    $this->render('index.php', 'Timeline', 'index.css', ['errorMessage' => $isSaved]);
+                    $this->home($isSaved);
                     exit();
                 }
 

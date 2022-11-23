@@ -12,7 +12,7 @@ class UserManager extends Manager
      */
     public function getAllUsers(): array
     {
-        $query = $this->pdo->query("SELECT * FROM User");
+        $query = $this->pdo->query("SELECT * FROM users");
 
         $users = [];
 
@@ -73,17 +73,18 @@ class UserManager extends Manager
         return $this->getUserById($this->pdo->lastInsertId());
     }
 
-    public function update(User $user): bool
+    public function update(User $user, $hashPassword = false): bool
     {
 
-        $user->setPassword($user->getPassword(), true);
+        $user->setPassword($user->getPassword(), $hashPassword);
         $updateUser =
             'UPDATE `users`
-            SET `username` = :userName, , `password` = :password
+            SET `username` = :userName, `admin` = :admin , `password` = :password
             WHERE `id` = :id';
 
         $query = $this->pdo->prepare($updateUser);
         $query->bindValue(':userName', $user->getUserName());
+        $query->bindValue(':admin', $user->getAdmin());
         $query->bindValue(':password', $user->getPassword());
         $query->bindValue(':id', $user->getId());
 

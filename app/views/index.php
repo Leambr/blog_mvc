@@ -1,13 +1,17 @@
 <header>
     <h2>
         <?php if (isset($name)) {
-            echo $name;
+            echo htmlspecialchars($name);
         } else {
             echo 'My Name is Nobody';
         } ?>
     </h2>
     <form action="/signOut" method="POST">
         <button type="submit">Déconnexion</button>
+    </form>
+    <br>
+    <form action="/setting" method="GET">
+        <button type="submit">Setting</button>
     </form>
     <h3>Nouveau Post</h3>
     <?php if (isset($errorMessage)) :
@@ -31,9 +35,9 @@
     <?php if (isset($posts)) :
         foreach ($posts as $post) : ?>
             <div class="article" style="margin-top:20px; border: solid 1px black; padding: 10px; width: 500px">
-                <span class="author"><?= $post->getAuthor() ?></span><br>
-                <span class="title"><?= $post->getTitle() ?></span><br>
-                <span class="content"><?= $post->getContent() ?></span><br>
+                <span class="author"><?= htmlspecialchars($post->getAuthor()) ?></span><br>
+                <span class="title"><?= htmlspecialchars($post->getTitle()) ?></span><br>
+                <span class="content"><?= htmlspecialchars($post->getContent()) ?></span><br>
                 <?php if ($post->getFile() !== null):?>
                     <img class="file" src="img/<?= $post->getFile()?>" alt="" style="max-width: 300px; max-height: 200px; padding: 10px;">
                     <br>
@@ -47,8 +51,8 @@
 
                     <button class="modify" style="margin-top: 10px">Modifier</button>
                     <form class="modifyForm" action="/post/patch" method="POST">
-                        <input class="title" type="text" name="title" value="<?= $post->getTitle() ?>" /><br>
-                        <textarea name="content" value="<?= $post->getContent() ?>"><?= $post->getContent() ?></textarea>
+                        <input class="title" type="text" name="title" value="<?= htmlspecialchars($post->getTitle()) ?>" /><br>
+                        <textarea name="content" value="<?= $post->getContent() ?>"><?= htmlspecialchars($post->getContent()) ?></textarea>
                         <input type="hidden" name="id" value="<?= $post->getId() ?>">
                         <button type="submit">Valider</button>
                     </form>
