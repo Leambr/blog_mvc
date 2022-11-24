@@ -1,0 +1,7 @@
+input, button {
+    margin-top: 12px;
+}
+
+.error {
+    color: red;
+}

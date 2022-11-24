@@ -23,15 +23,21 @@ class SettingController extends Controller
     #[Route('/setting/adminManagement', 'admin', ['POST'])]
     public function adminManagement()
     {
+        $id = $_POST["id"];
         $userManager = new UserManager(new PDOFactory());
-        $currentUser = unserialize($_SESSION['user']);
-        if ($currentUser->getAdmin() == false){
-            $currentUser->setAdmin('1');
+        $user = $userManager->getUserById($id);
+        if ($user->getAdmin() == false){
+            $user->setAdmin('1');
         } else {
-            $currentUser->setAdmin('0');
+            $user->setAdmin('0');
         }
-        $userManager->update($currentUser);
-        $_SESSION['user'] = serialize($currentUser);
+        $userManager->update($user);
+
+        $currentUser = unserialize($_SESSION['user']);
+        if ($currentUser->getId() == $id) {
+            $_SESSION['user'] = serialize($user);
+        }
+
         http_response_code(302);
         header("Location: /setting");
         exit();
@@ -44,13 +50,47 @@ class SettingController extends Controller
         $id = $_POST['userId'];
         if ($id) {
             if ($currentUser->getId() == $id) {
-                $this->setting(['Tu as vraiment essayé de te supprimer ?']);
+                $this->setting(['delete' => 'Tu as vraiment essayé de te supprimer ?']);
                 exit();
             }
             $userManager = new UserManager(new PDOFactory());
             $userManager->delete($id);
             http_response_code(302);
         }
+        header("Location: /setting");
+        exit();
+    }
+
+    #[Route('/setting/updateUser', 'updateUser', ['POST'])]
+    public function updateUser()
+    {
+        $id = $_POST["id"];
+        $userManager = new UserManager(new PDOFactory());
+        $user = $userManager->getUserById($id);
+
+        if ($_POST['userName'] != null) {
+            $name = $_POST['userName'];
+            $existName = $userManager->getUserByName($name);
+            if ($existName) {
+                $this->setting(['update' => 'le Nom est déjà pris']);
+                exit();
+            }
+            $user->setUsername($name);
+        }
+        if ($_POST['oldPassword'] != null && $_POST['newPassword'] != null) {
+            $oldPassword = $_POST['oldPassword'];
+            $newPassword = $_POST['newPassword'];
+            if (!$user->verifyPassword($oldPassword)) {
+                $this->setting(['update' => 'Mot de passe incorrect']);
+                exit();
+            }
+            $user->setPassword($newPassword, true);
+        }
+        $userManager->update($user);
+
+        $_SESSION['user'] = serialize($user);
+
+        http_response_code(302);
         header("Location: /setting");
         exit();
     }

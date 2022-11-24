@@ -27,7 +27,7 @@ abstract class Controller
         require_once $view;
         $content = ob_get_clean();
         $title = $title;
-        $style = '../../../style/' . $style;
+        $style = '../../../style/' . $style . '?time()';
 
 
         require_once $base;

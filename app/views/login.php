@@ -1,6 +1,6 @@
 <div class="block1">
     <?php if (isset($errorMessage)) : ?>
-        <span><?= $errorMessage ?></span>
+        <span class="error"><?= $errorMessage ?></span>
     <?php endif ?>
     <form class="form" action="/login" method="POST">
         <label for="username">Nom d'utilisateur :</label>

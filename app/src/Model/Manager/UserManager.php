@@ -59,7 +59,6 @@ class UserManager extends Manager
 
     public function insert(User $user): User
     {
-
         $user->setPassword($user->getPassword(), true);
         $newUser =
             "INSERT INTO `users` (`username`, `password`)
@@ -75,7 +74,6 @@ class UserManager extends Manager
 
     public function update(User $user, $hashPassword = false): bool
     {
-
         $user->setPassword($user->getPassword(), $hashPassword);
         $updateUser =
             'UPDATE `users`

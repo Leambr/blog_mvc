@@ -44,7 +44,7 @@ class SecurityController extends Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['username']) && isset($_POST['password'])) {
+            if ($_POST['username'] != null && $_POST['password'] != null) {
                 $username = $_POST['username'];
 
                 $userManager = new UserManager(new PDOFactory());
