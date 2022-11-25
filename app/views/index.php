@@ -1,7 +1,8 @@
 <header>
     <h2>
-        <?php if (isset($name)) {
-            echo htmlspecialchars($name);
+        <?php if (isset($name)) { ?>
+            <img class="profilPic" src="img/<?= $user->getProfilePicture()?>" style="border: 1px solid black; border-radius: 50%; object-fit: cover; width: 40px; height: 40px;">
+            <?= htmlspecialchars($name);
         } else {
             echo 'My Name is Nobody';
         } ?>
@@ -16,7 +17,7 @@
     <h3>Nouveau Post</h3>
     <?php if (isset($errorMessage)) :
         foreach ($errorMessage as $error): ?>
-            <span><?= $error ?></span><br>
+            <span class="error"><?= $error ?></span><br>
         <?php endforeach;
     endif ?>
     <form class="newPostForm" method="POST" action="/post" enctype="multipart/form-data" style="margin-top:20px; border: solid 1px black; padding: 10px; width: 300px">
@@ -35,6 +36,7 @@
     <?php if (isset($posts)) :
         foreach ($posts as $post) : ?>
             <div class="article" style="margin-top:20px; border: solid 1px black; padding: 10px; width: 500px">
+                <img class="profilPic" src="img/<?= $post->getProfilePicture()?>" style="border: 1px solid black; border-radius: 50%; object-fit: cover; width: 40px; height: 40px;">
                 <span class="author"><?= htmlspecialchars($post->getAuthor()) ?></span><br>
                 <span class="title"><?= htmlspecialchars($post->getTitle()) ?></span><br>
                 <span class="content"><?= htmlspecialchars($post->getContent()) ?></span><br>

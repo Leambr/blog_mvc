@@ -15,3 +15,60 @@ input {
 .error {
     color: red;
 }
+
+#depose {
+    /*position: absolute;*/
+    height:60px;
+    width: 174px;
+    /*left: 122px;
+    top: 240px;*/
+    font-size:20px;
+    line-height: 60px;
+    color:#999;
+    text-align: center;
+    padding:10px;
+    margin:10px;
+    border:2px dashed;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}
+#depose.onDropZone {
+    background-color: #00ff87;
+    color:#000;
+    border:1.8px solid #00ff87;
+}
+#fileToUpload {
+    display: none;
+}
+
+#preview {
+    display:none;
+}
+.fichier {
+    padding:5px;
+    background: white;
+    margin-top:1px;
+}
+.fichier img {
+    max-height: 80px;
+    max-width: 80px;
+    margin-right:10px;
+    vertical-align: middle;
+}
+.bloc {
+    /*position: absolute;*/
+    max-height: 90px;
+    max-width: 90px;
+    padding:5px;
+    margin:10px;
+    border:1px solid;
+    border-radius: 8px;
+    right: 116px;
+    top: 320px;
+}
+
+.newPicture {
+    margin-bottom: 50px;
+}
+

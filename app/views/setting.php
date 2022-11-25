@@ -17,6 +17,13 @@
 </header>
 <main>
     <h3>changer les informations d'utilisateur</h3>
+    <img class="profilPic" src="img/<?= $currentUser->getProfilePicture()?>" style="border: 1px solid black; border-radius: 50%; object-fit: cover; width: 40px; height: 40px;">
+    <form class="newPicture" method="POST" action="/profilePicture" enctype="multipart/form-data">
+        <div id="depose">Déposez vos images ou cliquez pour choisir</div>
+        <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg, image/png, image/gif, image/jpg">
+        <div class="bloc" id="preview"></div>
+        <button class="submit" type="submit">Envoyer</button>
+    </form>
     <?php if (isset($errorMessage['update'])) :
         foreach ($errorMessage as $error): ?>
             <span class="error"><?= $error ?></span><br><br>
@@ -91,3 +98,6 @@
         </table>
     <?php endif; ?>
 </main>
+<footer>
+    <script src="script/setting.js?<?php echo time(); ?>"></script>
+</footer>

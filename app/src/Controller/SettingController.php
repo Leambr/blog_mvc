@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Factory\PDOFactory;
+use App\Model\Manager\PostManager;
 use App\Model\Manager\UserManager;
 use App\Route\Route;
 use App\Model\Entity\User;
@@ -91,6 +92,34 @@ class SettingController extends Controller
         $_SESSION['user'] = serialize($user);
 
         http_response_code(302);
+        header("Location: /setting");
+        exit();
+    }
+
+    #[Route('/profilePicture', 'changePicture', ['POST'])]
+    public function profilePicture()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $file = null;
+            $user = unserialize($_SESSION['user']);
+
+            if ($_FILES['fileToUpload']['name']) {
+                $fileName = $this->uuid() . '.' . strtolower(pathinfo($_FILES["fileToUpload"]['name'],PATHINFO_EXTENSION));
+                $isSaved = $this->saveFile($fileName);
+                if ($isSaved[0] === 'error'){
+                    $this->setting($isSaved);
+                    exit();
+                }
+                $file = $fileName;
+            }
+                $user->setProfilePicture($file);
+                $userManager = new UserManager(new PDOFactory());
+                $userManager->update($user);
+                $postManager = new PostManager(new PDOFactory());
+                $postManager->updateProfilePicture($user->getId(), $file);
+                $_SESSION['user'] = serialize($user);
+                http_response_code(302);
+        }
         header("Location: /setting");
         exit();
     }

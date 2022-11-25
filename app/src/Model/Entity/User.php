@@ -7,9 +7,22 @@ use App\Model\Entity\BaseEntity;
 class User extends BaseEntity
 {
 
+    private ?string $profilePicture = null;
     private ?string $username = null;
     private ?string $password = null;
     private ?string $admin = null;
+
+
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
+        return $this;
+    }
 
     public function getUsername()
     {

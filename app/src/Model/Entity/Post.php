@@ -11,6 +11,7 @@ class Post extends BaseEntity
     private ?string $content = null;
     private ?string $file = null;
     private ?string $author = null;
+    private ?string $profilePicture = null;
     private ?DateTime $createdAt = null;
     private ?int $commentsCount = null;
     private ?int $userId = null;
@@ -56,6 +57,17 @@ class Post extends BaseEntity
     public function setAuthor($author)
     {
         $this->author = $author;
+        return $this;
+    }
+
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
         return $this;
     }
 

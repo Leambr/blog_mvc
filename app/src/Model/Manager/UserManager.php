@@ -77,13 +77,14 @@ class UserManager extends Manager
         $user->setPassword($user->getPassword(), $hashPassword);
         $updateUser =
             'UPDATE `users`
-            SET `username` = :userName, `admin` = :admin , `password` = :password
+            SET `username` = :userName, `admin` = :admin , `password` = :password, `profile_picture` = :picture
             WHERE `id` = :id';
 
         $query = $this->pdo->prepare($updateUser);
         $query->bindValue(':userName', $user->getUserName());
         $query->bindValue(':admin', $user->getAdmin());
         $query->bindValue(':password', $user->getPassword());
+        $query->bindValue(':picture', $user->getProfilePicture());
         $query->bindValue(':id', $user->getId());
 
         return $query->execute();

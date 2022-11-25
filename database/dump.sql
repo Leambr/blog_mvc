@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS users
 (
     id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    profile_picture VARCHAR(255) DEFAULT "default_profile_pic.png",
     username  VARCHAR(255) NOT NULL,
     password  VARCHAR(255) NOT NULL,
     admin     BOOLEAN      DEFAULT '0'
@@ -13,6 +14,7 @@ CREATE TABLE IF NOT EXISTS posts
     content TEXT NOT NULL,
     file VARCHAR(255),
     author VARCHAR(255) NOT NULL,
+    profile_picture VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     comments_count INT DEFAULT 0,
     user_id INT NOT NULL

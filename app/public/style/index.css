@@ -49,3 +49,7 @@
     right: 116px;
     top: 320px;
 }
+
+.error {
+    color: red;
+}

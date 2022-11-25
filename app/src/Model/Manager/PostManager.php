@@ -20,14 +20,15 @@ class PostManager extends Manager
     public function insert(Post $post)
     {
         $newArticle =
-            'INSERT INTO `posts` (`title`, `content`, `file`, `author`, `user_id`)
-            VALUES(:title, :content, :file, :author, :userId)';
+            'INSERT INTO `posts` (`title`, `content`, `file`, `author`, `profile_picture`, `user_id`)
+            VALUES(:title, :content, :file, :author, :picture, :userId)';
 
         $query = $this->pdo->prepare($newArticle);
         $query->bindValue(':title', $post->getTitle());
         $query->bindValue(':content', $post->getContent());
         $query->bindValue(':file', $post->getFile());
         $query->bindValue(':author', $post->getAuthor());
+        $query->bindValue(':picture', $post->getProfilePicture());
         $query->bindValue(':userId', $post->getUserId());
         $query->execute();
     }
@@ -43,6 +44,20 @@ class PostManager extends Manager
         $query->bindValue(':title', $post->getTitle());
         $query->bindValue(':content', $post->getContent());
         $query->bindValue(':post_id', $post->getId());
+
+        return $query->execute();
+    }
+
+    public function updateProfilePicture($id, $picture): bool
+    {
+        $updatePost =
+            'UPDATE `posts`
+            SET `profile_picture` = :picture
+            WHERE `user_id` = :userId';
+
+        $query = $this->pdo->prepare($updatePost);
+        $query->bindValue(':picture', $picture);
+        $query->bindValue(':userId', $id);
 
         return $query->execute();
     }
